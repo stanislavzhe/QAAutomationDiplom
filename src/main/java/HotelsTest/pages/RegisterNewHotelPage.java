@@ -327,7 +327,6 @@ public class RegisterNewHotelPage {
         return cityError.getText();
     }
 
-
     public boolean isShortDescriptionDisplayed(){
         return shortDescription.isDisplayed();
     }
@@ -394,5 +393,34 @@ public class RegisterNewHotelPage {
 
     public String getDescriptionErrorText() {
         return descriptionError.getText();
+    }
+
+
+
+
+    public boolean isNotesDisplayed(){
+        return notes.isDisplayed();
+    }
+
+    public String getNotesTitle(){
+        return notesTitle.getText();
+    }
+
+    public void typeNotes(String name) {
+        notes.sendKeys(name);
+    }
+
+    public void clearAndTypeNotes(String name) {
+        notes.clear();
+        notes.sendKeys(name);
+    }
+
+    public void clearNotes() {
+        notes.clear();
+    }
+
+    public String getNotesValue() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        return (String) executor.executeScript(" return arguments[0].value;", notes);
     }
 }

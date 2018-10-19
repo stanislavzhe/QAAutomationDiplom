@@ -480,9 +480,55 @@ public class HotelsTest extends BaseTest {
     @Test(description = "Verify that user can add Notes of new hotel")
     public void notes() {
         //Verify that  Notes field is displayed in Data section  of Register new Hotel
+        boolean actualNotesDisplayed = registerNewHotelPage.isNotesDisplayed();
+        Assert.assertTrue(actualNotesDisplayed);
+
+        String expectedNotesTitle = "Notes";
+        String actualNotesTitle = registerNewHotelPage.getNotesTitle();
+        Assert.assertTrue(actualNotesTitle.contains(expectedNotesTitle));
+
         //Verify that Notes field is editable
+        String expectedNotes = "New";
+        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        String actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
+        String nextPartOfNotes = " Notes";
+        expectedNotes = expectedNotes + nextPartOfNotes;
+        registerNewHotelPage.typeNotes(nextPartOfNotes);
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
+        nextPartOfNotes = "\nNext Line";
+        expectedNotes = expectedNotes + nextPartOfNotes;
+        registerNewHotelPage.typeNotes(nextPartOfNotes);
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
+        expectedNotes = "New Notes\n123\nnext line";
+        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
         //Verify that Notes field allows to input alphanumeric characters
+        expectedNotes = "1New 2Notes 3\n1\n2\n3";
+        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
         //Verify that it is possible to save the empty Notes field
+        expectedNotes = "";
+        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        registerNewHotelPage.clickOnSaveButton();
+        registerNewHotelPage.clickOnSaveButton();// need second click on save button
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
+
         //Verify that it is possible to save the valid Notes field
+        expectedNotes = "New Notes\n1\n2\n3";
+        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        registerNewHotelPage.clickOnSaveButton();
+        actualNotes = registerNewHotelPage.getNotesValue();
+        Assert.assertEquals(actualNotes, expectedNotes);
     }
 }
