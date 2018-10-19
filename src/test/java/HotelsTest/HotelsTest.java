@@ -2,6 +2,9 @@ package HotelsTest;
 
 import HotelsTest.pages.NavigationMenu;
 import HotelsTest.pages.RegisterNewHotelPage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -168,72 +171,187 @@ public class HotelsTest extends BaseTest {
         Assert.assertTrue(actualDateOfConstructionTitle.contains(expectedDateOfConstructionAsterisk));
 
         //Verify that Date of Construction is editable
-        registerNewHotelPage.typeDateOfConstruction("10.10");
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());
-        registerNewHotelPage.typeDateOfConstruction(".2018");
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());
-        registerNewHotelPage.clearAndTypeDateOfConstruction("01.01.1900");
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());
+        String expectedDateOfConstruction = "10.10";
+        registerNewHotelPage.typeDateOfConstruction(expectedDateOfConstruction);
+        String actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
+
+        String dateOfConstruction = ".2018";
+        expectedDateOfConstruction = "10.10.2018";
+        registerNewHotelPage.typeDateOfConstruction(dateOfConstruction);
+        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
+
+        expectedDateOfConstruction = "01.01.1900";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
+        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         //Verify Date of Construction field allows to input in date format
-        registerNewHotelPage.clearAndTypeDateOfConstruction("12.12.17");
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());
-        registerNewHotelPage.clearAndTypeDateOfConstruction("12.12.2017");
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());
+        expectedDateOfConstruction = "12.12.17";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
+        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
+
+        expectedDateOfConstruction = "12.12.2017";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
+        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         //Verify that it is not possible to save incorrect date format value Date of Construction field
         // and a meaningful error message is displayed
-        registerNewHotelPage.clearAndTypeDateOfConstruction("1900.10.10");
+        dateOfConstruction = "1900.10.10";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(dateOfConstruction);
         registerNewHotelPage.clickOnSaveButton();
-        System.out.println(registerNewHotelPage.isDateOfConstructionErrorDisplayed());// true
-        System.out.println(registerNewHotelPage.getDateOfConstructionErrorText());
-        // Date of Construction: '1900.10.10' could not be understood as a date. Example: 18.10.18
+        boolean actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        Assert.assertTrue(actualDateOfConstructionErrorDisplayed);
+
+        String expectedDateOfConstructionErrorText =
+                "Date of Construction: '1900.10.10' could not be understood as a date. Example";
+        String actualDateOfConstructionErrorText = registerNewHotelPage.getDateOfConstructionErrorText();
+        Assert.assertTrue(actualDateOfConstructionErrorText.contains(expectedDateOfConstructionErrorText));
 
         //Verify that it is not possible to save the empty Date of Construction field and a meaningful error message is displayed
         registerNewHotelPage.clearDateOfConstruction();
         registerNewHotelPage.clickOnSaveButton();
-        System.out.println(registerNewHotelPage.isDateOfConstructionErrorDisplayed());// true
-        System.out.println(registerNewHotelPage.getDateOfConstructionErrorText());
-        // Date of Construction: Validation Error: Value is required.
+        actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        Assert.assertTrue(actualDateOfConstructionErrorDisplayed);
+        expectedDateOfConstructionErrorText =
+                "Date of Construction: Validation Error: Value is required.";
+        actualDateOfConstructionErrorText = registerNewHotelPage.getDateOfConstructionErrorText();
+        Assert.assertEquals(actualDateOfConstructionErrorText, expectedDateOfConstructionErrorText);
 
         //Verify that it is possible to save valid Date of Construction field
-        registerNewHotelPage.clearAndTypeDateOfConstruction("10.10.2000");
+        dateOfConstruction = "10.10.2000";
+        expectedDateOfConstruction = "10.10.00";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(dateOfConstruction);
         registerNewHotelPage.clickOnSaveButton();
-        System.out.println(registerNewHotelPage.isDateOfConstructionErrorDisplayed());// false
-        System.out.println(registerNewHotelPage.getDateOfConstructionValue());// 10.10.00
+
+        actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        Assert.assertFalse(actualDateOfConstructionErrorDisplayed);
+
+        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
     }
 
     @Test(description = "Verify that user can add Country of new hotel")
     public void countryOfHotel() throws InterruptedException {
         //Verify that Country field is displayed in Data section of Register new Hotel page
-        System.out.println(registerNewHotelPage.isCountrySelectDisplayed());// true
-        System.out.println(registerNewHotelPage.getCountryTitle());// Country:*
+        boolean actualCountrySelectDisplayed = registerNewHotelPage.isCountrySelectDisplayed();
+        Assert.assertTrue(actualCountrySelectDisplayed);
+
+        String expectedCountryTitle = "Country";
+        String actualCountryTitle = registerNewHotelPage.getCountryTitle();
+        Assert.assertTrue(actualCountryTitle.contains(expectedCountryTitle));
 
         //Verify that Country fields is marked with asterisk
-        System.out.println(registerNewHotelPage.getCountryTitle().contains("*"));// true
+        String expectedCountryTitleAsterisk = "*";
+        actualCountryTitle = registerNewHotelPage.getCountryTitle();
+        Assert.assertTrue(actualCountryTitle.contains(expectedCountryTitleAsterisk));
 
         //Verify that Country field is editable
+        String expectedCountrySelect = "USA";
         registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect("USA");
-        System.out.println(registerNewHotelPage.getCountrySelectValue());
-        registerNewHotelPage.clickOnCountrySelect();
-        Thread.sleep(500);
-        registerNewHotelPage.setCountrySelect("Ukraine");
-        System.out.println(registerNewHotelPage.getCountrySelectValue());
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        String actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
+        Assert.assertEquals(actualCountrySelect, expectedCountrySelect);
 
-        //Verify that it is not possible to save the empty (with default value “Select me’) Country field
-        //And a meaningful error is displayed
+        expectedCountrySelect = "Ukraine";
         registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect("Select one");
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
+        Assert.assertEquals(actualCountrySelect, expectedCountrySelect);
+
+        //Verify that it is not possible to save the empty (with default value “Select me’) Country field and a meaningful error is displayed
+        expectedCountrySelect = "Select one";
+        registerNewHotelPage.clickOnCountrySelect();
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
         registerNewHotelPage.clickOnSaveButton();
-        System.out.println(registerNewHotelPage.isCountryErrorDisplayed());// true
-        System.out.println(registerNewHotelPage.getCountryErrorText());// Country: Validation Error: Value is required.
+
+        boolean actualCountryErrorDisplayed = registerNewHotelPage.isCountryErrorDisplayed();
+        Assert.assertTrue(actualCountryErrorDisplayed);
+
+        String expectedCountryErrorText = "Country: Validation Error: Value is required.";
+        String actualCountryErrorText = registerNewHotelPage.getCountryErrorText();
+        Assert.assertEquals(actualCountryErrorText, expectedCountryErrorText);
 
         //Verify that it is possible to save the valid Country field
+        expectedCountrySelect = "Ukraine";
         registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect("Ukraine");
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
         registerNewHotelPage.clickOnSaveButton();
-        System.out.println(registerNewHotelPage.isCountryErrorDisplayed());// false
-        System.out.println(registerNewHotelPage.getCountrySelectValue());
+
+        actualCountryErrorDisplayed = registerNewHotelPage.isCountryErrorDisplayed();
+        Assert.assertFalse(actualCountryErrorDisplayed);
+
+        actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
+        Assert.assertEquals(actualCountrySelect, expectedCountrySelect);
+    }
+
+    @Test(description = "Verify that user can add City of new hotel")
+    public void cityOfHotel() throws InterruptedException {
+        //Verify that City field is displayed in Data section of Register new Hotel page
+        boolean actualCitySelectDisplayed = registerNewHotelPage.isCitySelectDisplayed();
+        Assert.assertTrue(actualCitySelectDisplayed);
+
+        String expectedCityTitle = "City";
+        String actualCityTitle = registerNewHotelPage.getCityTitle();
+        Assert.assertTrue(actualCityTitle.contains(expectedCityTitle));
+
+        //Verify that City field is marked with asterisk
+        String expectedCityTitleAsterisk = "*";
+        actualCityTitle = registerNewHotelPage.getCountryTitle();
+        Assert.assertTrue(actualCityTitle.contains(expectedCityTitleAsterisk));
+
+        //Verify that City field is editable
+        String expectedCountrySelect = "Ukraine";
+        String expectedCitySelect = "Kyiv";
+        registerNewHotelPage.clickOnCountrySelect();
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        registerNewHotelPage.clickOnCitySelect();
+        registerNewHotelPage.setCitySelect(expectedCitySelect);
+        String actualCitySelect = registerNewHotelPage.getCitySelectValue();
+        Assert.assertEquals(actualCitySelect, expectedCitySelect);
+
+        expectedCountrySelect = "Ukraine";
+        expectedCitySelect = "Lviv";
+        registerNewHotelPage.clickOnCountrySelect();
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        registerNewHotelPage.clickOnCitySelect();
+        registerNewHotelPage.setCitySelect(expectedCitySelect);
+        actualCitySelect = registerNewHotelPage.getCitySelectValue();
+        Assert.assertEquals(actualCitySelect, expectedCitySelect);
+
+        //Verify that it is not possible to save the empty (with default value “Select me”) City field and a meaningful error message is displayed
+        expectedCountrySelect = "Ukraine";
+        expectedCitySelect = "Select one";
+        registerNewHotelPage.clickOnCountrySelect();
+
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        registerNewHotelPage.clickOnCitySelect();
+        registerNewHotelPage.setCitySelect(expectedCitySelect);
+        registerNewHotelPage.clickOnSaveButton();
+
+        boolean actualCityErrorDisplayed = registerNewHotelPage.isCityErrorDisplayed();
+        Assert.assertTrue(actualCityErrorDisplayed);
+
+        String expectedCityErrorText = "City: Validation Error: Value is required.";
+        String actualCityErrorText = registerNewHotelPage.getCityErrorText();
+        Assert.assertEquals(actualCityErrorText, expectedCityErrorText);
+
+        //Verify that it is possible to save the valid City field
+        expectedCountrySelect = "Ukraine";
+        expectedCitySelect = "Lviv";
+        registerNewHotelPage.clickOnCountrySelect();
+        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
+        registerNewHotelPage.clickOnCitySelect();
+        registerNewHotelPage.setCitySelect(expectedCitySelect);
+        registerNewHotelPage.clickOnSaveButton();
+
+        actualCityErrorDisplayed = registerNewHotelPage.isCityErrorDisplayed();
+        Assert.assertFalse(actualCityErrorDisplayed);
+
+        actualCitySelect = registerNewHotelPage.getCitySelectValue();
+        Assert.assertEquals(actualCitySelect, expectedCitySelect);
     }
 }

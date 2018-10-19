@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.Objects;
@@ -72,6 +74,21 @@ public class RegisterNewHotelPage {
 
     @FindBy(id = "add_hotel:j_idt51")
     private WebElement countryError;
+
+
+
+    @FindBy(id = "add_hotel:city_label")
+    private WebElement cityInput;
+
+    @FindBy(xpath = "//*[@id='add_hotel:city_panel']//li")
+    private List <WebElement> citySelectList;
+
+    @FindBy(id = "add_hotel:j_idt52")
+    private WebElement cityTitle;
+
+    @FindBy(id = "add_hotel:j_idt55")
+    private WebElement cityError;
+
 
     public RegisterNewHotelPage(WebDriver driver) {
         this.driver = driver;
@@ -211,7 +228,6 @@ public class RegisterNewHotelPage {
 
     public void clickOnCountrySelect(){
         countryInput.click();
-
     }
 
     public String getCountrySelectValue(){
@@ -222,19 +238,10 @@ public class RegisterNewHotelPage {
         return countryTitle.getText();
     }
 
-    public int size(){
-        return countrySelectList.size();
-    }
-
-    public String valueOfElement(int index){
-        return countrySelectList.get(index).getText();
-    }
-
-    public String attrOfElement(int index){
-        return countrySelectList.get(index).getAttribute("data-label");
-    }
-
     public void setCountrySelect(String selectValue){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(countrySelectList.get(0)));
+
         boolean isClick = false;
         for (WebElement element: countrySelectList) {
             if (Objects.equals(element.getText(), selectValue)){
@@ -255,5 +262,47 @@ public class RegisterNewHotelPage {
 
     public String getCountryErrorText(){
         return countryError.getText();
+    }
+
+    public boolean isCitySelectDisplayed(){
+        return cityInput.isDisplayed();
+    }
+
+    public String getCitySelectValue(){
+        return cityInput.getText();
+    }
+
+    public String getCityTitle(){
+        return cityTitle.getText();
+    }
+
+    public void clickOnCitySelect(){
+        cityInput.click();
+    }
+
+    public void setCitySelect(String selectValue){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(citySelectList.get(0)));
+
+        boolean isClick = false;
+        for (WebElement element: citySelectList) {
+            if (Objects.equals(element.getText(), selectValue)){
+                citySelectList.get(citySelectList.indexOf(element)).click();
+                isClick = true;
+                break;
+            }
+        }
+        //TODO edit to Exception
+        if (!isClick){
+            System.out.println("No such elements");
+        }
+    }
+
+    public boolean isCityErrorDisplayed(){
+        return cityError.isDisplayed();
+    }
+
+    public String getCityErrorText(){
+        return cityError.getText();
     }
 }
