@@ -1,0 +1,6 @@
+.allure
+.idea
+.idea/workspace.xml
+chromedriver_win32
+*.log
+.target
