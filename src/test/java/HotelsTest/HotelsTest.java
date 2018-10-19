@@ -2,15 +2,13 @@ package HotelsTest;
 
 import HotelsTest.pages.NavigationMenu;
 import HotelsTest.pages.RegisterNewHotelPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class HotelsTest extends BaseTest {
     private RegisterNewHotelPage registerNewHotelPage;
+    private final String expectedAsterisk = "*";
 
     @BeforeMethod
     public void openNewHotelPage() {
@@ -56,10 +54,9 @@ public class HotelsTest extends BaseTest {
         String actualNameFiledTitle = registerNewHotelPage.getNameFiledTitle();
         Assert.assertTrue(actualNameFiledTitle.contains(expectedNameFiledTitle));
 
-        //Verify that Name field is marked with asterisk
-        String expectedNameAsterisk = "*";
+        //Verify that Name field is marked with expectedAsterisk
         actualNameFiledTitle = registerNewHotelPage.getNameFiledTitle();
-        Assert.assertTrue(actualNameFiledTitle.contains(expectedNameAsterisk));
+        Assert.assertTrue(actualNameFiledTitle.contains(expectedAsterisk));
 
         //Verify that Name field is editable
         String expectedNameField = "Name";
@@ -79,7 +76,7 @@ public class HotelsTest extends BaseTest {
         Assert.assertEquals(actualName, expectedNameField);
 
         //Verify that Name field allows to input alphanumeric characters
-        expectedNameField = "1Name 2Last";
+        expectedNameField = "1Name 2Last 3";
         registerNewHotelPage.clearAndTypeName(expectedNameField);
         actualName = registerNewHotelPage.getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
@@ -165,10 +162,9 @@ public class HotelsTest extends BaseTest {
         boolean actualDateOfConstructionCalendarIconDisplayed = registerNewHotelPage.isDateOfConstructionCalendarIconDisplayed();
         Assert.assertTrue(actualDateOfConstructionCalendarIconDisplayed);
 
-        //Verify that Date of Construction field is marked with asterisk
-        String expectedDateOfConstructionAsterisk = "*";
+        //Verify that Date of Construction field is marked with expectedAsterisk
         actualDateOfConstructionTitle = registerNewHotelPage.getDateOfConstructionTitle();
-        Assert.assertTrue(actualDateOfConstructionTitle.contains(expectedDateOfConstructionAsterisk));
+        Assert.assertTrue(actualDateOfConstructionTitle.contains(expectedAsterisk));
 
         //Verify that Date of Construction is editable
         String expectedDateOfConstruction = "10.10";
@@ -235,7 +231,7 @@ public class HotelsTest extends BaseTest {
     }
 
     @Test(description = "Verify that user can add Country of new hotel")
-    public void countryOfHotel() throws InterruptedException {
+    public void countryOfHotel() {
         //Verify that Country field is displayed in Data section of Register new Hotel page
         boolean actualCountrySelectDisplayed = registerNewHotelPage.isCountrySelectDisplayed();
         Assert.assertTrue(actualCountrySelectDisplayed);
@@ -244,10 +240,9 @@ public class HotelsTest extends BaseTest {
         String actualCountryTitle = registerNewHotelPage.getCountryTitle();
         Assert.assertTrue(actualCountryTitle.contains(expectedCountryTitle));
 
-        //Verify that Country fields is marked with asterisk
-        String expectedCountryTitleAsterisk = "*";
+        //Verify that Country fields is marked with expectedAsterisk
         actualCountryTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertTrue(actualCountryTitle.contains(expectedCountryTitleAsterisk));
+        Assert.assertTrue(actualCountryTitle.contains(expectedAsterisk));
 
         //Verify that Country field is editable
         String expectedCountrySelect = "USA";
@@ -289,7 +284,7 @@ public class HotelsTest extends BaseTest {
     }
 
     @Test(description = "Verify that user can add City of new hotel")
-    public void cityOfHotel() throws InterruptedException {
+    public void cityOfHotel() {
         //Verify that City field is displayed in Data section of Register new Hotel page
         boolean actualCitySelectDisplayed = registerNewHotelPage.isCitySelectDisplayed();
         Assert.assertTrue(actualCitySelectDisplayed);
@@ -298,10 +293,9 @@ public class HotelsTest extends BaseTest {
         String actualCityTitle = registerNewHotelPage.getCityTitle();
         Assert.assertTrue(actualCityTitle.contains(expectedCityTitle));
 
-        //Verify that City field is marked with asterisk
-        String expectedCityTitleAsterisk = "*";
+        //Verify that City field is marked with expectedAsterisk
         actualCityTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertTrue(actualCityTitle.contains(expectedCityTitleAsterisk));
+        Assert.assertTrue(actualCityTitle.contains(expectedAsterisk));
 
         //Verify that City field is editable
         String expectedCountrySelect = "Ukraine";
@@ -353,5 +347,87 @@ public class HotelsTest extends BaseTest {
 
         actualCitySelect = registerNewHotelPage.getCitySelectValue();
         Assert.assertEquals(actualCitySelect, expectedCitySelect);
+    }
+
+    @Test(description = "Verify that user can add Short Description of new hotel ")
+    public void shortDescription() {
+        //Verify that Short Description field is displayed in Data section  of Register new Hotel
+        boolean actualShortDescriptionDisplayed = registerNewHotelPage.isShortDescriptionDisplayed();
+        Assert.assertTrue(actualShortDescriptionDisplayed);
+
+        String expectedShortDescriptionTitle = "Short Description";
+        String actualShortDescriptionTitle = registerNewHotelPage.getShortDescriptionTitle();
+        Assert.assertTrue(actualShortDescriptionTitle.contains(expectedShortDescriptionTitle));
+
+        //Verify that Short Description field is marked with expectedAsterisk
+        actualShortDescriptionTitle = registerNewHotelPage.getShortDescriptionTitle();
+        Assert.assertTrue(actualShortDescriptionTitle.contains(expectedAsterisk));
+
+        //Verify that Short Description field is editable
+        String expectedShortDescription = "Short";
+        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
+        String actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+
+        String secondPartOfDescription = " Description";
+        expectedShortDescription = expectedShortDescription + secondPartOfDescription;
+        registerNewHotelPage.typeShortDescription(secondPartOfDescription);
+        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+
+        expectedShortDescription = "Short Description";
+        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
+        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+
+        //Verify that Short Description field allows to input alphanumeric characters
+        expectedShortDescription = "1Short 2Description 3";
+        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
+        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+
+        expectedShortDescription = "1Short2Description3";
+        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
+        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+
+        //Verify that it is not possible to save the empty Short Description field and a meaningful error message is displayed
+        registerNewHotelPage.clearShortDescription();
+        registerNewHotelPage.clickOnSaveButton();
+        boolean actualShortDescriptionErrorDisplayed = registerNewHotelPage.isShortDescriptionErrorDisplayed();
+        Assert.assertTrue(actualShortDescriptionErrorDisplayed);
+
+        String expectedShortDescriptionErrorText = "Short Description: Validation Error: Value is required.";
+        String actualShortDescriptionErrorText = registerNewHotelPage.getShortDescriptionErrorText();
+        Assert.assertEquals(actualShortDescriptionErrorText, expectedShortDescriptionErrorText);
+
+        //Verify that it is possible to save the valid Short Description field
+        expectedShortDescription = "Short Description";
+        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
+        registerNewHotelPage.clickOnSaveButton();
+        actualShortDescriptionErrorDisplayed = registerNewHotelPage.isShortDescriptionErrorDisplayed();
+        Assert.assertFalse(actualShortDescriptionErrorDisplayed);
+
+        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        Assert.assertEquals(actualShortDescription, expectedShortDescription);
+    }
+
+    @Test(description = "Verify that user can add Description of new hotel")
+    public void description(){
+        //Verify that  Description field is displayed in Data section  of Register new Hotel
+        //Verify that Description field is marked with asterisk
+        //Verify that Description field is editable
+        //Verify that Description field allows to input alphanumeric characters
+        //Verify that it is not possible to save the empty Description field and a meaningful error message is displayed
+        //Verify that it is possible to save the valid Description field
+    }
+
+    @Test(description = "Verify that user can add Notes of new hotel")
+    public void notes(){
+        //Verify that  Notes field is displayed in Data section  of Register new Hotel
+        //Verify that Notes field is editable
+        //Verify that Notes field allows to input alphanumeric characters
+        //Verify that it is possible to save the empty Notes field
+        //Verify that it is possible to save the valid Notes field
     }
 }

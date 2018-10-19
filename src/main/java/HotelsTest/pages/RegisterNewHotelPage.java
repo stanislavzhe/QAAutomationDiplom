@@ -75,8 +75,6 @@ public class RegisterNewHotelPage {
     @FindBy(id = "add_hotel:j_idt51")
     private WebElement countryError;
 
-
-
     @FindBy(id = "add_hotel:city_label")
     private WebElement cityInput;
 
@@ -88,6 +86,30 @@ public class RegisterNewHotelPage {
 
     @FindBy(id = "add_hotel:j_idt55")
     private WebElement cityError;
+
+    @FindBy(id = "add_hotel:short_description")
+    private WebElement shortDescription;
+
+    @FindBy(id = "add_hotel:j_idt56")
+    private WebElement shortDescriptionTitle;
+
+    @FindBy(id = "add_hotel:j_idt57")
+    private WebElement shortDescriptionError;
+
+    @FindBy(id = "add_hotel:description")
+    private WebElement description;
+
+    @FindBy(id = "add_hotel:j_idt58")
+    private WebElement descriptionTitle;
+
+    @FindBy(id = "add_hotel:j_idt59")
+    private WebElement descriptionError;
+
+    @FindBy(id = "add_hotel:notes")
+    private WebElement notes;
+
+    @FindBy(id = "add_hotel:j_idt60")
+    private WebElement notesTitle;
 
 
     public RegisterNewHotelPage(WebDriver driver) {
@@ -156,7 +178,6 @@ public class RegisterNewHotelPage {
     public boolean isGlobalRateDisplayed() {
         return globalRate.isDisplayed();
     }
-
 
     public void selectGlobalRateStars(int starsValue) {
         int starValueToIndex = starsValue - 1;
@@ -305,4 +326,40 @@ public class RegisterNewHotelPage {
     public String getCityErrorText(){
         return cityError.getText();
     }
+
+
+    public boolean isShortDescriptionDisplayed(){
+        return shortDescription.isDisplayed();
+    }
+
+    public String getShortDescriptionTitle(){
+        return shortDescriptionTitle.getText();
+    }
+
+    public void typeShortDescription(String name) {
+        shortDescription.sendKeys(name);
+    }
+
+    public void clearAndTypeShortDescription(String name) {
+        shortDescription.clear();
+        shortDescription.sendKeys(name);
+    }
+
+    public void clearShortDescription() {
+        shortDescription.clear();
+    }
+
+    public String getShortDescriptionValue() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        return (String) executor.executeScript(" return arguments[0].value;", shortDescription);
+    }
+
+    public boolean isShortDescriptionErrorDisplayed(){
+        return shortDescriptionError.isDisplayed();
+    }
+
+    public String getShortDescriptionErrorText() {
+        return shortDescriptionError.getText();
+    }
+
 }
