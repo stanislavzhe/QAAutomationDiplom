@@ -413,17 +413,72 @@ public class HotelsTest extends BaseTest {
     }
 
     @Test(description = "Verify that user can add Description of new hotel")
-    public void description(){
+    public void description() {
         //Verify that  Description field is displayed in Data section  of Register new Hotel
+        boolean actualDescriptionDisplayed = registerNewHotelPage.isDescriptionDisplayed();
+        Assert.assertTrue(actualDescriptionDisplayed);
+
+        String expectedDescriptionTitle = "Description";
+        String actualDescriptionTitle = registerNewHotelPage.getDescriptionTitle();
+        Assert.assertTrue(actualDescriptionTitle.contains(expectedDescriptionTitle));
+
         //Verify that Description field is marked with asterisk
+        actualDescriptionTitle = registerNewHotelPage.getDescriptionTitle();
+        Assert.assertTrue(actualDescriptionTitle.contains(expectedAsterisk));
+
         //Verify that Description field is editable
+        String expectedDescription = "New";
+        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
+        String actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
+
+        String nextPartOfDescription = " Description";
+        expectedDescription = expectedDescription + nextPartOfDescription;
+        registerNewHotelPage.typeDescription(nextPartOfDescription);
+        actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
+
+        nextPartOfDescription = "\nNext Line";
+        expectedDescription = expectedDescription + nextPartOfDescription;
+        registerNewHotelPage.typeDescription(nextPartOfDescription);
+        actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
+
+        expectedDescription = "New Description\n123\nnext line";
+        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
+        actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
+
         //Verify that Description field allows to input alphanumeric characters
+        expectedDescription = "1New 2Description 3\n1\n2\n3";
+        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
+        actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
+
         //Verify that it is not possible to save the empty Description field and a meaningful error message is displayed
+        registerNewHotelPage.clearDescription();
+        registerNewHotelPage.clickOnSaveButton();
+        registerNewHotelPage.clickOnSaveButton();// need to add second click to save button
+        boolean actualDescriptionErrorDisplayed = registerNewHotelPage.isDescriptionErrorDisplayed();
+        Assert.assertTrue(actualDescriptionErrorDisplayed);
+
+        String expectedDescriptionErrorText = "Description: Validation Error: Value is required.";
+        String actualDescriptionErrorText = registerNewHotelPage.getDescriptionErrorText();
+        Assert.assertEquals(actualDescriptionErrorText, expectedDescriptionErrorText);
+
         //Verify that it is possible to save the valid Description field
+        expectedDescription = "New Description\n1\n2\n3";
+        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
+        registerNewHotelPage.clickOnSaveButton();
+        actualDescriptionErrorDisplayed = registerNewHotelPage.isDescriptionErrorDisplayed();
+        Assert.assertFalse(actualDescriptionErrorDisplayed);
+
+        actualDescription = registerNewHotelPage.getDescriptionValue();
+        Assert.assertEquals(actualDescription, expectedDescription);
     }
 
     @Test(description = "Verify that user can add Notes of new hotel")
-    public void notes(){
+    public void notes() {
         //Verify that  Notes field is displayed in Data section  of Register new Hotel
         //Verify that Notes field is editable
         //Verify that Notes field allows to input alphanumeric characters

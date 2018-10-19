@@ -362,4 +362,37 @@ public class RegisterNewHotelPage {
         return shortDescriptionError.getText();
     }
 
+    public boolean isDescriptionDisplayed(){
+        return description.isDisplayed();
+    }
+
+    public String getDescriptionTitle(){
+        return descriptionTitle.getText();
+    }
+
+    public void typeDescription(String name) {
+        description.sendKeys(name);
+    }
+
+    public void clearAndTypeDescription(String name) {
+        description.clear();
+        description.sendKeys(name);
+    }
+
+    public void clearDescription() {
+        description.clear();
+    }
+
+    public String getDescriptionValue() {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        return (String) executor.executeScript(" return arguments[0].value;", description);
+    }
+
+    public boolean isDescriptionErrorDisplayed(){
+        return descriptionError.isDisplayed();
+    }
+
+    public String getDescriptionErrorText() {
+        return descriptionError.getText();
+    }
 }
