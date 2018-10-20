@@ -18,8 +18,7 @@ public class HotelsTest extends BaseTest {
     public void openNewHotelPage() {
         // open registerNewHotelPage
         NavigationMenu navigationMenu = new NavigationMenu(driver);
-        registerNewHotelPage = navigationMenu
-                .moveToArticleButton()
+        registerNewHotelPage = navigationMenu.moveToArticleButton()
                 .moveToNewButton()
                 .clickOnHotelButton();
     }
@@ -64,36 +63,36 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Name field is editable
         String expectedNameField = "Name";
-        registerNewHotelPage.clearAndTypeName(expectedNameField);
-        String actualName = registerNewHotelPage.getNameFieldValue();
+        String actualName = registerNewHotelPage.clearAndTypeName(expectedNameField)
+                .getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
 
         String secondPartOfName = " Last";
         expectedNameField = expectedNameField + secondPartOfName;
-        registerNewHotelPage.typeName(secondPartOfName);
-        actualName = registerNewHotelPage.getNameFieldValue();
+        actualName = registerNewHotelPage.typeName(secondPartOfName)
+                .getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
 
         expectedNameField = "Last Name";
-        registerNewHotelPage.clearAndTypeName(expectedNameField);
-        actualName = registerNewHotelPage.getNameFieldValue();
+        actualName = registerNewHotelPage.clearAndTypeName(expectedNameField)
+                .getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
 
         //Verify that Name field allows to input alphanumeric characters
         expectedNameField = "1Name 2Last 3";
-        registerNewHotelPage.clearAndTypeName(expectedNameField);
-        actualName = registerNewHotelPage.getNameFieldValue();
+        actualName = registerNewHotelPage.clearAndTypeName(expectedNameField)
+                .getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
 
         expectedNameField = "1Name2Last3";
-        registerNewHotelPage.clearAndTypeName(expectedNameField);
-        actualName = registerNewHotelPage.getNameFieldValue();
+        actualName = registerNewHotelPage.clearAndTypeName(expectedNameField)
+                .getNameFieldValue();
         Assert.assertEquals(actualName, expectedNameField);
 
         //Verify that it is not possible to save the empty Name field and a meaningful error message is displayed
-        registerNewHotelPage.clearNameField();
-        registerNewHotelPage.clickOnSaveButton();
-        boolean actualNameErrorDisplayed = registerNewHotelPage.isNameErrorDisplayed();
+        boolean actualNameErrorDisplayed = registerNewHotelPage.clearNameField()
+                .clickOnSaveButton()
+                .isNameErrorDisplayed();
         Assert.assertTrue(actualNameErrorDisplayed);
 
         String expectedNameErrorText = "Name: Validation Error: Value is required.";
@@ -102,9 +101,9 @@ public class HotelsTest extends BaseTest {
 
         //Verify that it is possible to save the valid name field
         expectedNameField = "First Name";
-        registerNewHotelPage.clearAndTypeName(expectedNameField);
-        registerNewHotelPage.clickOnSaveButton();
-        actualNameErrorDisplayed = registerNewHotelPage.isNameErrorDisplayed();
+        actualNameErrorDisplayed = registerNewHotelPage.clearAndTypeName(expectedNameField)
+                .clickOnSaveButton()
+                .isNameErrorDisplayed();
         Assert.assertFalse(actualNameErrorDisplayed);
 
         String actualNameField = registerNewHotelPage.getNameFieldValue();
@@ -123,32 +122,32 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Global Rating field allows to rating of the hotel (0-5 stars)
         int expectedStarsValue = 1;
-        registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        int actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
+        int actualStartsValue = registerNewHotelPage.selectGlobalRateStars(expectedStarsValue)
+                .getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         expectedStarsValue = 0;
-        registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
+        actualStartsValue = registerNewHotelPage.selectGlobalRateStars(expectedStarsValue)
+                .getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         expectedStarsValue = 5;
-        registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
+        actualStartsValue = registerNewHotelPage.selectGlobalRateStars(expectedStarsValue)
+                .getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         //Verify that it is possible to save the Global Rating field
         expectedStarsValue = 0;
-        registerNewHotelPage.cancelGlobalRateStar();
-        registerNewHotelPage.clickOnSaveButton();
-        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
+        actualStartsValue = registerNewHotelPage.cancelGlobalRateStar()
+                .clickOnSaveButton()
+                .getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         //Verify that it is possible to save valid Global Rating field
         expectedStarsValue = 3;
-        registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        registerNewHotelPage.clickOnSaveButton();
-        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
+        actualStartsValue = registerNewHotelPage.selectGlobalRateStars(expectedStarsValue)
+                .clickOnSaveButton()
+                .getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
     }
 
@@ -171,37 +170,38 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Date of Construction is editable
         String expectedDateOfConstruction = "10.10";
-        registerNewHotelPage.typeDateOfConstruction(expectedDateOfConstruction);
-        String actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        String actualDateOfConstruction = registerNewHotelPage.typeDateOfConstruction(expectedDateOfConstruction)
+                .getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         String secondPartDateOfConstruction = ".2018";
-        expectedDateOfConstruction = "10.10.2018";
-        registerNewHotelPage.typeDateOfConstruction(secondPartDateOfConstruction);
-        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        expectedDateOfConstruction = expectedDateOfConstruction + secondPartDateOfConstruction;
+        actualDateOfConstruction = registerNewHotelPage.typeDateOfConstruction(secondPartDateOfConstruction)
+                .getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         expectedDateOfConstruction = "01.01.1900";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
-        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        actualDateOfConstruction = registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction)
+                .getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         //Verify Date of Construction field allows to input in date format
         expectedDateOfConstruction = "12.12.17";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
-        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        actualDateOfConstruction = registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction)
+                .getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         expectedDateOfConstruction = "12.12.2017";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction);
-        actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
+        actualDateOfConstruction = registerNewHotelPage.clearAndTypeDateOfConstruction(expectedDateOfConstruction)
+                .getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
         //Verify that it is not possible to save incorrect date format value Date of Construction field and a meaningful error message is displayed
         actualDateOfConstruction = "1900.10.10";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(actualDateOfConstruction);
-        registerNewHotelPage.clickOnSaveButton();
-        boolean actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        boolean actualDateOfConstructionErrorDisplayed = registerNewHotelPage
+                .clearAndTypeDateOfConstruction(actualDateOfConstruction)
+                .clickOnSaveButton()
+                .isDateOfConstructionErrorDisplayed();
         Assert.assertTrue(actualDateOfConstructionErrorDisplayed);
 
         String expectedDateOfConstructionErrorText = "Date of Construction: '" + actualDateOfConstruction +
@@ -210,22 +210,22 @@ public class HotelsTest extends BaseTest {
         Assert.assertEquals(actualDateOfConstructionErrorText, expectedDateOfConstructionErrorText);
 
         //Verify that it is not possible to save the empty Date of Construction field and a meaningful error message is displayed
-        registerNewHotelPage.clearDateOfConstruction();
-        registerNewHotelPage.clickOnSaveButton();
-        actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        actualDateOfConstructionErrorDisplayed = registerNewHotelPage.clearDateOfConstruction()
+                .clickOnSaveButton()
+                .isDateOfConstructionErrorDisplayed();
         Assert.assertTrue(actualDateOfConstructionErrorDisplayed);
-        expectedDateOfConstructionErrorText =
-                "Date of Construction: Validation Error: Value is required.";
+
+        expectedDateOfConstructionErrorText = "Date of Construction: Validation Error: Value is required.";
         actualDateOfConstructionErrorText = registerNewHotelPage.getDateOfConstructionErrorText();
         Assert.assertEquals(actualDateOfConstructionErrorText, expectedDateOfConstructionErrorText);
 
         //Verify that it is possible to save valid Date of Construction field
-        secondPartDateOfConstruction = "10.10.2000";
+        String dateOfConstruction = "10.10.2000";
         expectedDateOfConstruction = "10.10.00";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(secondPartDateOfConstruction);
-        registerNewHotelPage.clickOnSaveButton();
-
-        actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
+        actualDateOfConstructionErrorDisplayed = registerNewHotelPage
+                .clearAndTypeDateOfConstruction(dateOfConstruction)
+                .clickOnSaveButton()
+                .isDateOfConstructionErrorDisplayed();
         Assert.assertFalse(actualDateOfConstructionErrorDisplayed);
 
         actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
@@ -246,27 +246,25 @@ public class HotelsTest extends BaseTest {
         boolean actualNameContainsAsterisk = registerNewHotelPage.isCountryContainsAsterisk(expectedAsterisk);
         Assert.assertTrue(actualNameContainsAsterisk);
 
-
         //Verify that Country field is editable
         String expectedCountrySelect = "USA";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        String actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
+        String actualCountrySelect = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .getCountrySelectValue();
         Assert.assertEquals(actualCountrySelect, expectedCountrySelect);
 
         expectedCountrySelect = "Ukraine";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
+        actualCountrySelect = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .getCountrySelectValue();
         Assert.assertEquals(actualCountrySelect, expectedCountrySelect);
 
         //Verify that it is not possible to save the empty (with default value “Select me’) Country field and a meaningful error is displayed
         expectedCountrySelect = "Select one";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnSaveButton();
-
-        boolean actualCountryErrorDisplayed = registerNewHotelPage.isCountryErrorDisplayed();
+        boolean actualCountryErrorDisplayed = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnSaveButton()
+                .isCountryErrorDisplayed();
         Assert.assertTrue(actualCountryErrorDisplayed);
 
         String expectedCountryErrorText = "Country: Validation Error: Value is required.";
@@ -275,11 +273,10 @@ public class HotelsTest extends BaseTest {
 
         //Verify that it is possible to save the valid Country field
         expectedCountrySelect = "Ukraine";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnSaveButton();
-
-        actualCountryErrorDisplayed = registerNewHotelPage.isCountryErrorDisplayed();
+        actualCountryErrorDisplayed = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnSaveButton()
+                .isCountryErrorDisplayed();
         Assert.assertFalse(actualCountryErrorDisplayed);
 
         actualCountrySelect = registerNewHotelPage.getCountrySelectValue();
@@ -303,33 +300,31 @@ public class HotelsTest extends BaseTest {
         //Verify that City field is editable
         String expectedCountrySelect = "Ukraine";
         String expectedCitySelect = "Kyiv";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnCitySelect();
-        registerNewHotelPage.setCitySelect(expectedCitySelect);
-        String actualCitySelect = registerNewHotelPage.getCitySelectValue();
+        String actualCitySelect = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnCitySelect()
+                .setCitySelect(expectedCitySelect)
+                .getCitySelectValue();
         Assert.assertEquals(actualCitySelect, expectedCitySelect);
 
         expectedCountrySelect = "Ukraine";
         expectedCitySelect = "Lviv";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnCitySelect();
-        registerNewHotelPage.setCitySelect(expectedCitySelect);
-        actualCitySelect = registerNewHotelPage.getCitySelectValue();
+        actualCitySelect = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnCitySelect()
+                .setCitySelect(expectedCitySelect)
+                .getCitySelectValue();
         Assert.assertEquals(actualCitySelect, expectedCitySelect);
 
         //Verify that it is not possible to save the empty (with default value “Select me”) City field and a meaningful error message is displayed
         expectedCountrySelect = "Ukraine";
         expectedCitySelect = "Select one";
-        registerNewHotelPage.clickOnCountrySelect();
-
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnCitySelect();
-        registerNewHotelPage.setCitySelect(expectedCitySelect);
-        registerNewHotelPage.clickOnSaveButton();
-
-        boolean actualCityErrorDisplayed = registerNewHotelPage.isCityErrorDisplayed();
+        boolean actualCityErrorDisplayed = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnCitySelect()
+                .setCitySelect(expectedCitySelect)
+                .clickOnSaveButton()
+                .isCityErrorDisplayed();
         Assert.assertTrue(actualCityErrorDisplayed);
 
         String expectedCityErrorText = "City: Validation Error: Value is required.";
@@ -339,13 +334,12 @@ public class HotelsTest extends BaseTest {
         //Verify that it is possible to save the valid City field
         expectedCountrySelect = "Ukraine";
         expectedCitySelect = "Lviv";
-        registerNewHotelPage.clickOnCountrySelect();
-        registerNewHotelPage.setCountrySelect(expectedCountrySelect);
-        registerNewHotelPage.clickOnCitySelect();
-        registerNewHotelPage.setCitySelect(expectedCitySelect);
-        registerNewHotelPage.clickOnSaveButton();
-
-        actualCityErrorDisplayed = registerNewHotelPage.isCityErrorDisplayed();
+        actualCityErrorDisplayed = registerNewHotelPage.clickOnCountrySelect()
+                .setCountrySelect(expectedCountrySelect)
+                .clickOnCitySelect()
+                .setCitySelect(expectedCitySelect)
+                .clickOnSaveButton()
+                .isCityErrorDisplayed();
         Assert.assertFalse(actualCityErrorDisplayed);
 
         actualCitySelect = registerNewHotelPage.getCitySelectValue();
@@ -368,19 +362,19 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Short Description field is editable
         String expectedShortDescription = "Short";
-        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
-        String actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        String actualShortDescription = registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription)
+                .getShortDescriptionValue();
         Assert.assertEquals(actualShortDescription, expectedShortDescription);
 
         String secondPartOfDescription = " Description";
         expectedShortDescription = expectedShortDescription + secondPartOfDescription;
-        registerNewHotelPage.typeShortDescription(secondPartOfDescription);
-        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        actualShortDescription = registerNewHotelPage.typeShortDescription(secondPartOfDescription)
+                .getShortDescriptionValue();
         Assert.assertEquals(actualShortDescription, expectedShortDescription);
 
         expectedShortDescription = "Short Description";
-        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
-        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        actualShortDescription = registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription)
+                .getShortDescriptionValue();
         Assert.assertEquals(actualShortDescription, expectedShortDescription);
 
         //Verify that Short Description field allows to input alphanumeric characters
@@ -390,14 +384,15 @@ public class HotelsTest extends BaseTest {
         Assert.assertEquals(actualShortDescription, expectedShortDescription);
 
         expectedShortDescription = "1Short2Description3";
-        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
-        actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
+        actualShortDescription = registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription)
+                .getShortDescriptionValue();
         Assert.assertEquals(actualShortDescription, expectedShortDescription);
 
         //Verify that it is not possible to save the empty Short Description field and a meaningful error message is displayed
-        registerNewHotelPage.clearShortDescription();
-        registerNewHotelPage.clickOnSaveButton();
-        boolean actualShortDescriptionErrorDisplayed = registerNewHotelPage.isShortDescriptionErrorDisplayed();
+
+        boolean actualShortDescriptionErrorDisplayed = registerNewHotelPage.clearShortDescription()
+                .clickOnSaveButton()
+                .isShortDescriptionErrorDisplayed();
         Assert.assertTrue(actualShortDescriptionErrorDisplayed);
 
         String expectedShortDescriptionErrorText = "Short Description: Validation Error: Value is required.";
@@ -406,9 +401,9 @@ public class HotelsTest extends BaseTest {
 
         //Verify that it is possible to save the valid Short Description field
         expectedShortDescription = "Short Description";
-        registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription);
-        registerNewHotelPage.clickOnSaveButton();
-        actualShortDescriptionErrorDisplayed = registerNewHotelPage.isShortDescriptionErrorDisplayed();
+        actualShortDescriptionErrorDisplayed = registerNewHotelPage.clearAndTypeShortDescription(expectedShortDescription)
+                .clickOnSaveButton()
+                .isShortDescriptionErrorDisplayed();
         Assert.assertFalse(actualShortDescriptionErrorDisplayed);
 
         actualShortDescription = registerNewHotelPage.getShortDescriptionValue();
@@ -431,38 +426,39 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Description field is editable
         String expectedDescription = "New";
-        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
-        String actualDescription = registerNewHotelPage.getDescriptionValue();
+        String actualDescription = registerNewHotelPage.clearAndTypeDescription(expectedDescription)
+                .getDescriptionValue();
         Assert.assertEquals(actualDescription, expectedDescription);
 
         String nextPartOfDescription = " Description";
         expectedDescription = expectedDescription + nextPartOfDescription;
-        registerNewHotelPage.typeDescription(nextPartOfDescription);
-        actualDescription = registerNewHotelPage.getDescriptionValue();
+
+        actualDescription = registerNewHotelPage.typeDescription(nextPartOfDescription)
+                .getDescriptionValue();
         Assert.assertEquals(actualDescription, expectedDescription);
 
         nextPartOfDescription = "\nNext Line";
         expectedDescription = expectedDescription + nextPartOfDescription;
-        registerNewHotelPage.typeDescription(nextPartOfDescription);
-        actualDescription = registerNewHotelPage.getDescriptionValue();
+        actualDescription = registerNewHotelPage.typeDescription(nextPartOfDescription)
+                .getDescriptionValue();
         Assert.assertEquals(actualDescription, expectedDescription);
 
         expectedDescription = "New Description\n123\nnext line";
-        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
-        actualDescription = registerNewHotelPage.getDescriptionValue();
+        actualDescription = registerNewHotelPage.clearAndTypeDescription(expectedDescription)
+                .getDescriptionValue();
         Assert.assertEquals(actualDescription, expectedDescription);
 
         //Verify that Description field allows to input alphanumeric characters
         expectedDescription = "1New 2Description 3\n1\n2\n3";
-        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
-        actualDescription = registerNewHotelPage.getDescriptionValue();
+        actualDescription = registerNewHotelPage.clearAndTypeDescription(expectedDescription)
+                .getDescriptionValue();
         Assert.assertEquals(actualDescription, expectedDescription);
 
         //Verify that it is not possible to save the empty Description field and a meaningful error message is displayed
-        registerNewHotelPage.clearDescription();
-        registerNewHotelPage.clickOnSaveButton();
-        registerNewHotelPage.clickOnSaveButton();// need to add second click to save button
-        boolean actualDescriptionErrorDisplayed = registerNewHotelPage.isDescriptionErrorDisplayed();
+        boolean actualDescriptionErrorDisplayed = registerNewHotelPage.clearDescription()
+                .clickOnSaveButton()
+                .clickOnSaveButton()// need to add second click to save button
+                .isDescriptionErrorDisplayed();
         Assert.assertTrue(actualDescriptionErrorDisplayed);
 
         String expectedDescriptionErrorText = "Description: Validation Error: Value is required.";
@@ -471,9 +467,9 @@ public class HotelsTest extends BaseTest {
 
         //Verify that it is possible to save the valid Description field
         expectedDescription = "New Description\n1\n2\n3";
-        registerNewHotelPage.clearAndTypeDescription(expectedDescription);
-        registerNewHotelPage.clickOnSaveButton();
-        actualDescriptionErrorDisplayed = registerNewHotelPage.isDescriptionErrorDisplayed();
+        actualDescriptionErrorDisplayed = registerNewHotelPage.clearAndTypeDescription(expectedDescription)
+                .clickOnSaveButton()
+                .isDescriptionErrorDisplayed();
         Assert.assertFalse(actualDescriptionErrorDisplayed);
 
         actualDescription = registerNewHotelPage.getDescriptionValue();
@@ -492,46 +488,47 @@ public class HotelsTest extends BaseTest {
 
         //Verify that Notes field is editable
         String expectedNotes = "New";
-        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
-        String actualNotes = registerNewHotelPage.getNotesValue();
+        String actualNotes = registerNewHotelPage.clearAndTypeNotes(expectedNotes)
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         String nextPartOfNotes = " Notes";
         expectedNotes = expectedNotes + nextPartOfNotes;
-        registerNewHotelPage.typeNotes(nextPartOfNotes);
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage.typeNotes(nextPartOfNotes)
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         nextPartOfNotes = "\nNext Line";
         expectedNotes = expectedNotes + nextPartOfNotes;
-        registerNewHotelPage.typeNotes(nextPartOfNotes);
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage.typeNotes(nextPartOfNotes)
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         expectedNotes = "New Notes\n123\nnext line";
-        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage.clearAndTypeNotes(expectedNotes)
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         //Verify that Notes field allows to input alphanumeric characters
         expectedNotes = "1New 2Notes 3\n1\n2\n3";
-        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage.clearAndTypeNotes(expectedNotes)
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         //Verify that it is possible to save the empty Notes field
         expectedNotes = "";
-        registerNewHotelPage.clearNotes();
-        registerNewHotelPage.clickOnSaveButton();
-        registerNewHotelPage.clickOnSaveButton();// need second click on save button
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage
+                .clearNotes()
+                .clickOnSaveButton()
+                .clickOnSaveButton()// need second click on save button
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
 
         //Verify that it is possible to save the valid Notes field
         expectedNotes = "New Notes\n1\n2\n3";
-        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
-        registerNewHotelPage.clickOnSaveButton();
-        actualNotes = registerNewHotelPage.getNotesValue();
+        actualNotes = registerNewHotelPage.clearAndTypeNotes(expectedNotes)
+                .clickOnSaveButton()
+                .getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
     }
 

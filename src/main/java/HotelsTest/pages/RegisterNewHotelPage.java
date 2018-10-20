@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.imageio.spi.RegisterableService;
 import java.io.IOException;
 import java.util.List;
 
@@ -132,8 +133,9 @@ public class RegisterNewHotelPage {
         return saveButton.isDisplayed();
     }
 
-    public void clickOnSaveButton() {
+    public RegisterNewHotelPage clickOnSaveButton() {
         saveButton.click();
+        return this;
     }
 
     public String getNameFiledTitle() {
@@ -152,17 +154,20 @@ public class RegisterNewHotelPage {
         return nameFiled.isDisplayed();
     }
 
-    public void typeName(String name) {
+    public RegisterNewHotelPage typeName(String name) {
         nameFiled.sendKeys(name);
+        return this;
     }
 
-    public void clearAndTypeName(String name) {
+    public RegisterNewHotelPage clearAndTypeName(String name) {
         nameFiled.clear();
         nameFiled.sendKeys(name);
+        return this;
     }
 
-    public void clearNameField() {
+    public RegisterNewHotelPage clearNameField() {
         nameFiled.clear();
+        return this;
     }
 
     public String getNameFieldValue() {
@@ -186,7 +191,7 @@ public class RegisterNewHotelPage {
         return globalRate.isDisplayed();
     }
 
-    public void selectGlobalRateStars(int starsValue) throws IOException {
+    public RegisterNewHotelPage selectGlobalRateStars(int starsValue) throws IOException {
         int starValueToIndex = starsValue - 1;
         if (starsValue <= 5 && starsValue >= 1) {
             globalRateStarsList.get(starValueToIndex).click();
@@ -195,10 +200,12 @@ public class RegisterNewHotelPage {
         } else {
             throw new IOException("Wrong stars value: " + starsValue + ", instead of max 5");
         }
+        return this;
     }
 
-    public void cancelGlobalRateStar() {
+    public RegisterNewHotelPage cancelGlobalRateStar() {
         globalRateCancel.click();
+        return this;
     }
 
     public String getGlobalRateValue() {
@@ -226,17 +233,20 @@ public class RegisterNewHotelPage {
         return dateOfConstructionInput.isDisplayed();
     }
 
-    public void typeDateOfConstruction(String dateValue) {
+    public RegisterNewHotelPage typeDateOfConstruction(String dateValue) {
         dateOfConstructionInput.sendKeys(dateValue);
+        return this;
     }
 
-    public void clearAndTypeDateOfConstruction(String dateValue) {
+    public RegisterNewHotelPage clearAndTypeDateOfConstruction(String dateValue) {
         dateOfConstructionInput.clear();
         dateOfConstructionInput.sendKeys(dateValue);
+        return this;
     }
 
-    public void clearDateOfConstruction() {
+    public RegisterNewHotelPage clearDateOfConstruction() {
         dateOfConstructionInput.clear();
+        return this;
     }
 
     public String getDateOfConstructionValue() {
@@ -260,8 +270,9 @@ public class RegisterNewHotelPage {
         return countryInput.isDisplayed();
     }
 
-    public void clickOnCountrySelect() {
+    public RegisterNewHotelPage clickOnCountrySelect() {
         countryInput.click();
+        return this;
     }
 
     public String getCountrySelectValue() {
@@ -276,8 +287,9 @@ public class RegisterNewHotelPage {
         return (isFieldTitleContainsAsterisk(asterisk, countryTitle));
     }
 
-    public void setCountrySelect(String selectValue) throws IOException {
+    public RegisterNewHotelPage setCountrySelect(String selectValue) throws IOException {
         setSelect(selectValue, countrySelectList);
+        return this;
     }
 
     public boolean isCountryErrorDisplayed() {
@@ -304,12 +316,14 @@ public class RegisterNewHotelPage {
         return (isFieldTitleContainsAsterisk(asterisk, cityTitle));
     }
 
-    public void clickOnCitySelect() {
+    public RegisterNewHotelPage clickOnCitySelect() {
         cityInput.click();
+        return this;
     }
 
-    public void setCitySelect(String selectValue) throws IOException {
+    public RegisterNewHotelPage setCitySelect(String selectValue) throws IOException {
         setSelect(selectValue, citySelectList);
+        return this;
     }
 
     public void setSelect(String selectValue, List<WebElement> selectElement) throws IOException {
@@ -349,17 +363,20 @@ public class RegisterNewHotelPage {
         return (isFieldTitleContainsAsterisk(asterisk,shortDescriptionTitle));
     }
 
-    public void typeShortDescription(String name) {
+    public RegisterNewHotelPage typeShortDescription(String name) {
         shortDescription.sendKeys(name);
+        return this;
     }
 
-    public void clearAndTypeShortDescription(String name) {
+    public RegisterNewHotelPage clearAndTypeShortDescription(String name) {
         shortDescription.clear();
         shortDescription.sendKeys(name);
+        return this;
     }
 
-    public void clearShortDescription() {
+    public RegisterNewHotelPage clearShortDescription() {
         shortDescription.clear();
+        return this;
     }
 
     public String getShortDescriptionValue() {
@@ -387,17 +404,20 @@ public class RegisterNewHotelPage {
         return (isFieldTitleContainsAsterisk(asterisk,descriptionTitle));
     }
 
-    public void typeDescription(String name) {
+    public RegisterNewHotelPage typeDescription(String name) {
         description.sendKeys(name);
+        return this;
     }
 
-    public void clearAndTypeDescription(String name) {
+    public RegisterNewHotelPage clearAndTypeDescription(String name) {
         description.clear();
         description.sendKeys(name);
+        return this;
     }
 
-    public void clearDescription() {
+    public RegisterNewHotelPage clearDescription() {
         description.clear();
+        return this;
     }
 
     public String getDescriptionValue() {
@@ -421,17 +441,20 @@ public class RegisterNewHotelPage {
         return notesTitle.getText();
     }
 
-    public void typeNotes(String name) {
+    public RegisterNewHotelPage typeNotes(String name) {
         notes.sendKeys(name);
+        return this;
     }
 
-    public void clearAndTypeNotes(String name) {
+    public RegisterNewHotelPage clearAndTypeNotes(String name) {
         notes.clear();
         notes.sendKeys(name);
+        return this;
     }
 
-    public void clearNotes() {
+    public RegisterNewHotelPage clearNotes() {
         notes.clear();
+        return this;
     }
 
     public String getNotesValue() {
