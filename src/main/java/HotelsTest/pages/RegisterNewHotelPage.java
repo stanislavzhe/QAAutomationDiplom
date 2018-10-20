@@ -111,7 +111,6 @@ public class RegisterNewHotelPage {
     @FindBy(id = "add_hotel:j_idt60")
     private WebElement notesTitle;
 
-
     public RegisterNewHotelPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -394,9 +393,6 @@ public class RegisterNewHotelPage {
     public String getDescriptionErrorText() {
         return descriptionError.getText();
     }
-
-
-
 
     public boolean isNotesDisplayed(){
         return notes.isDisplayed();
