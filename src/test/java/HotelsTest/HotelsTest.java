@@ -15,7 +15,7 @@ public class HotelsTest extends BaseTest {
     private final String expectedAsterisk = "*";
 
     @BeforeMethod
-    public void openNewHotelPage() {
+    public void openNewHotelPage(){
         // open registerNewHotelPage
         NavigationMenu navigationMenu = new NavigationMenu(driver);
         registerNewHotelPage = navigationMenu.moveToArticleButton()
@@ -25,6 +25,7 @@ public class HotelsTest extends BaseTest {
 
     @Test(description = "Verify that user can open New Hotel page")
     public void newHotelPage() {
+
         //Verify that Register new Hotel page is displayed when user selects Article->New->Hotel
         String expectedPageTitle = "Register new Hotel";
         String actualPageTitle = registerNewHotelPage.getPageTitle();
@@ -40,7 +41,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedDataFormTitle = "Data:";
         String actualDataFormTitle = registerNewHotelPage.getDataFormTitle();
-        Assert.assertEquals(actualDataFormTitle,expectedDataFormTitle);
+        Assert.assertEquals(actualDataFormTitle, expectedDataFormTitle);
 
         //Verify that save button is displayed on Register new Hotel
         boolean actualSaveButtonDisplayed = registerNewHotelPage.isSaveButtonDisplayed();
@@ -55,7 +56,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedNameFiledTitle = "Name:" + expectedAsterisk;
         String actualNameFiledTitle = registerNewHotelPage.getNameFiledTitle();
-        Assert.assertEquals(actualNameFiledTitle,expectedNameFiledTitle);
+        Assert.assertEquals(actualNameFiledTitle, expectedNameFiledTitle);
 
         //Verify that Name field is marked with expectedAsterisk
         boolean actualNameContainsAsterisk = registerNewHotelPage.isNameContainsAsterisk(expectedAsterisk);
@@ -115,7 +116,7 @@ public class HotelsTest extends BaseTest {
         //Verify that Global Rating field is displayed in Data section of Register new Hotel page
         String expectedGlobalRateTitle = "Global Rating:";
         String actualGlobalRateTitle = registerNewHotelPage.getGlobalRateTitle();
-        Assert.assertEquals(actualGlobalRateTitle,expectedGlobalRateTitle);
+        Assert.assertEquals(actualGlobalRateTitle, expectedGlobalRateTitle);
 
         boolean actualGlobalRateDisplayed = registerNewHotelPage.isGlobalRateDisplayed();
         Assert.assertTrue(actualGlobalRateDisplayed);
@@ -156,7 +157,7 @@ public class HotelsTest extends BaseTest {
         //Verify that Date of Construction field is displayed in Data section of Register new Hotel page
         String expectedDateOfConstructionTitle = "Date of Construction:" + expectedAsterisk;
         String actualDateOfConstructionTitle = registerNewHotelPage.getDateOfConstructionTitle();
-        Assert.assertEquals(actualDateOfConstructionTitle,expectedDateOfConstructionTitle);
+        Assert.assertEquals(actualDateOfConstructionTitle, expectedDateOfConstructionTitle);
 
         boolean actualDateOfConstructionInputDisplayed = registerNewHotelPage.isDateOfConstructionInputDisplayed();
         Assert.assertTrue(actualDateOfConstructionInputDisplayed);
@@ -240,7 +241,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedCountryTitle = "Country:" + expectedAsterisk;
         String actualCountryTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertEquals(actualCountryTitle,expectedCountryTitle);
+        Assert.assertEquals(actualCountryTitle, expectedCountryTitle);
 
         //Verify that Country fields is marked with expectedAsterisk
         boolean actualNameContainsAsterisk = registerNewHotelPage.isCountryContainsAsterisk(expectedAsterisk);
@@ -291,7 +292,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedCityTitle = "City:" + expectedAsterisk;
         String actualCityTitle = registerNewHotelPage.getCityTitle();
-        Assert.assertEquals(actualCityTitle,expectedCityTitle);
+        Assert.assertEquals(actualCityTitle, expectedCityTitle);
 
         //Verify that City field is marked with expectedAsterisk
         boolean actualNameContainsAsterisk = registerNewHotelPage.isCityContainsAsterisk(expectedAsterisk);
@@ -354,7 +355,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedShortDescriptionTitle = "Short Description:" + expectedAsterisk;
         String actualShortDescriptionTitle = registerNewHotelPage.getShortDescriptionTitle();
-        Assert.assertEquals(actualShortDescriptionTitle,expectedShortDescriptionTitle);
+        Assert.assertEquals(actualShortDescriptionTitle, expectedShortDescriptionTitle);
 
         //Verify that Short Description field is marked with expectedAsterisk
         boolean actualNameContainsAsterisk = registerNewHotelPage.isShortDescriptionContainsAsterisk(expectedAsterisk);
@@ -418,7 +419,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedDescriptionTitle = "Description:" + expectedAsterisk;
         String actualDescriptionTitle = registerNewHotelPage.getDescriptionTitle();
-        Assert.assertEquals(actualDescriptionTitle,expectedDescriptionTitle);
+        Assert.assertEquals(actualDescriptionTitle, expectedDescriptionTitle);
 
         //Verify that Description field is marked with asterisk
         boolean actualNameContainsAsterisk = registerNewHotelPage.isDescriptionContainsAsterisk(expectedAsterisk);
@@ -484,7 +485,7 @@ public class HotelsTest extends BaseTest {
 
         String expectedNotesTitle = "Notes:";
         String actualNotesTitle = registerNewHotelPage.getNotesTitle();
-        Assert.assertEquals(actualNotesTitle,expectedNotesTitle);
+        Assert.assertEquals(actualNotesTitle, expectedNotesTitle);
 
         //Verify that Notes field is editable
         String expectedNotes = "New";
@@ -532,7 +533,7 @@ public class HotelsTest extends BaseTest {
         Assert.assertEquals(actualNotes, expectedNotes);
     }
 
-    private static String getCurrentDate(){
+    private static String getCurrentDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
         Date date = new Date();
         return formatter.format(date);
