@@ -6,6 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HotelsTest extends BaseTest {
     private RegisterNewHotelPage registerNewHotelPage;
     private final String expectedAsterisk = "*";
@@ -27,17 +31,17 @@ public class HotelsTest extends BaseTest {
         String actualPageTitle = registerNewHotelPage.getPageTitle();
         Assert.assertEquals(actualPageTitle, expectedPageTitle);
 
-        String expectedPageUrl = "hotel";
+        String expectedTextInPageUrl = "hotel";
         String actualPageUrl = driver.getCurrentUrl();
-        Assert.assertTrue(actualPageUrl.contains(expectedPageUrl));
+        Assert.assertTrue(actualPageUrl.contains(expectedTextInPageUrl));
 
         //Verify that Data section is displayed on Register new Hotel
         boolean actualDataFormDisplayed = registerNewHotelPage.isDataFormDisplayed();
         Assert.assertTrue(actualDataFormDisplayed);
 
-        String expectedDataFromTitle = "Data";
-        String actualDataFromTitle = registerNewHotelPage.getDataFormTitle();
-        Assert.assertTrue(actualDataFromTitle.contains(expectedDataFromTitle));
+        String expectedDataFormTitle = "Data:";
+        String actualDataFormTitle = registerNewHotelPage.getDataFormTitle();
+        Assert.assertEquals(actualDataFormTitle,expectedDataFormTitle);
 
         //Verify that save button is displayed on Register new Hotel
         boolean actualSaveButtonDisplayed = registerNewHotelPage.isSaveButtonDisplayed();
@@ -50,13 +54,13 @@ public class HotelsTest extends BaseTest {
         boolean actualNameFieldDisplayed = registerNewHotelPage.isNameFieldDisplayed();
         Assert.assertTrue(actualNameFieldDisplayed);
 
-        String expectedNameFiledTitle = "Name";
+        String expectedNameFiledTitle = "Name:" + expectedAsterisk;
         String actualNameFiledTitle = registerNewHotelPage.getNameFiledTitle();
-        Assert.assertTrue(actualNameFiledTitle.contains(expectedNameFiledTitle));
+        Assert.assertEquals(actualNameFiledTitle,expectedNameFiledTitle);
 
         //Verify that Name field is marked with expectedAsterisk
-        actualNameFiledTitle = registerNewHotelPage.getNameFiledTitle();
-        Assert.assertTrue(actualNameFiledTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isNameContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
 
         //Verify that Name field is editable
         String expectedNameField = "Name";
@@ -105,15 +109,14 @@ public class HotelsTest extends BaseTest {
 
         String actualNameField = registerNewHotelPage.getNameFieldValue();
         Assert.assertEquals(actualNameField, expectedNameField);
-
     }
 
     @Test(description = "Verify that user can edit Global Rating field")
-    public void globalRating() {
+    public void globalRating() throws IOException {
         //Verify that Global Rating field is displayed in Data section of Register new Hotel page
-        String expectedGlobalRateTitle = "Global Rating";
+        String expectedGlobalRateTitle = "Global Rating:";
         String actualGlobalRateTitle = registerNewHotelPage.getGlobalRateTitle();
-        Assert.assertTrue(actualGlobalRateTitle.contains(expectedGlobalRateTitle));
+        Assert.assertEquals(actualGlobalRateTitle,expectedGlobalRateTitle);
 
         boolean actualGlobalRateDisplayed = registerNewHotelPage.isGlobalRateDisplayed();
         Assert.assertTrue(actualGlobalRateDisplayed);
@@ -121,40 +124,40 @@ public class HotelsTest extends BaseTest {
         //Verify that Global Rating field allows to rating of the hotel (0-5 stars)
         int expectedStarsValue = 1;
         registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        int actualStartsValue = Integer.parseInt(registerNewHotelPage.getGlobalRateValue());
+        int actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         expectedStarsValue = 0;
         registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        actualStartsValue = Integer.parseInt(registerNewHotelPage.getGlobalRateValue());
+        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         expectedStarsValue = 5;
         registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
-        actualStartsValue = Integer.parseInt(registerNewHotelPage.getGlobalRateValue());
+        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         //Verify that it is possible to save the Global Rating field
         expectedStarsValue = 0;
-        registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
+        registerNewHotelPage.cancelGlobalRateStar();
         registerNewHotelPage.clickOnSaveButton();
-        actualStartsValue = Integer.parseInt(registerNewHotelPage.getGlobalRateValue());
+        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
 
         //Verify that it is possible to save valid Global Rating field
-        expectedStarsValue = 5;
+        expectedStarsValue = 3;
         registerNewHotelPage.selectGlobalRateStars(expectedStarsValue);
         registerNewHotelPage.clickOnSaveButton();
-        actualStartsValue = Integer.parseInt(registerNewHotelPage.getGlobalRateValue());
+        actualStartsValue = registerNewHotelPage.getGlobalRateIntValue();
         Assert.assertEquals(actualStartsValue, expectedStarsValue);
     }
 
     @Test(description = "Verify that user can add Date of Construction of new hotel")
     public void dateOfConstruction() {
         //Verify that Date of Construction field is displayed in Data section of Register new Hotel page
-        String expectedDateOfConstructionTitle = "Date of Construction";
+        String expectedDateOfConstructionTitle = "Date of Construction:" + expectedAsterisk;
         String actualDateOfConstructionTitle = registerNewHotelPage.getDateOfConstructionTitle();
-        Assert.assertTrue(actualDateOfConstructionTitle.contains(expectedDateOfConstructionTitle));
+        Assert.assertEquals(actualDateOfConstructionTitle,expectedDateOfConstructionTitle);
 
         boolean actualDateOfConstructionInputDisplayed = registerNewHotelPage.isDateOfConstructionInputDisplayed();
         Assert.assertTrue(actualDateOfConstructionInputDisplayed);
@@ -163,8 +166,8 @@ public class HotelsTest extends BaseTest {
         Assert.assertTrue(actualDateOfConstructionCalendarIconDisplayed);
 
         //Verify that Date of Construction field is marked with expectedAsterisk
-        actualDateOfConstructionTitle = registerNewHotelPage.getDateOfConstructionTitle();
-        Assert.assertTrue(actualDateOfConstructionTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isDateOfConstructionContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
 
         //Verify that Date of Construction is editable
         String expectedDateOfConstruction = "10.10";
@@ -172,9 +175,9 @@ public class HotelsTest extends BaseTest {
         String actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
-        String dateOfConstruction = ".2018";
+        String secondPartDateOfConstruction = ".2018";
         expectedDateOfConstruction = "10.10.2018";
-        registerNewHotelPage.typeDateOfConstruction(dateOfConstruction);
+        registerNewHotelPage.typeDateOfConstruction(secondPartDateOfConstruction);
         actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
@@ -194,18 +197,17 @@ public class HotelsTest extends BaseTest {
         actualDateOfConstruction = registerNewHotelPage.getDateOfConstructionValue();
         Assert.assertEquals(actualDateOfConstruction, expectedDateOfConstruction);
 
-        //Verify that it is not possible to save incorrect date format value Date of Construction field
-        // and a meaningful error message is displayed
-        dateOfConstruction = "1900.10.10";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(dateOfConstruction);
+        //Verify that it is not possible to save incorrect date format value Date of Construction field and a meaningful error message is displayed
+        actualDateOfConstruction = "1900.10.10";
+        registerNewHotelPage.clearAndTypeDateOfConstruction(actualDateOfConstruction);
         registerNewHotelPage.clickOnSaveButton();
         boolean actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
         Assert.assertTrue(actualDateOfConstructionErrorDisplayed);
 
-        String expectedDateOfConstructionErrorText =
-                "Date of Construction: '1900.10.10' could not be understood as a date. Example";
+        String expectedDateOfConstructionErrorText = "Date of Construction: '" + actualDateOfConstruction +
+                "' could not be understood as a date. Example: " + getCurrentDate();
         String actualDateOfConstructionErrorText = registerNewHotelPage.getDateOfConstructionErrorText();
-        Assert.assertTrue(actualDateOfConstructionErrorText.contains(expectedDateOfConstructionErrorText));
+        Assert.assertEquals(actualDateOfConstructionErrorText, expectedDateOfConstructionErrorText);
 
         //Verify that it is not possible to save the empty Date of Construction field and a meaningful error message is displayed
         registerNewHotelPage.clearDateOfConstruction();
@@ -218,9 +220,9 @@ public class HotelsTest extends BaseTest {
         Assert.assertEquals(actualDateOfConstructionErrorText, expectedDateOfConstructionErrorText);
 
         //Verify that it is possible to save valid Date of Construction field
-        dateOfConstruction = "10.10.2000";
+        secondPartDateOfConstruction = "10.10.2000";
         expectedDateOfConstruction = "10.10.00";
-        registerNewHotelPage.clearAndTypeDateOfConstruction(dateOfConstruction);
+        registerNewHotelPage.clearAndTypeDateOfConstruction(secondPartDateOfConstruction);
         registerNewHotelPage.clickOnSaveButton();
 
         actualDateOfConstructionErrorDisplayed = registerNewHotelPage.isDateOfConstructionErrorDisplayed();
@@ -231,18 +233,19 @@ public class HotelsTest extends BaseTest {
     }
 
     @Test(description = "Verify that user can add Country of new hotel")
-    public void countryOfHotel() {
+    public void countryOfHotel() throws IOException {
         //Verify that Country field is displayed in Data section of Register new Hotel page
         boolean actualCountrySelectDisplayed = registerNewHotelPage.isCountrySelectDisplayed();
         Assert.assertTrue(actualCountrySelectDisplayed);
 
-        String expectedCountryTitle = "Country";
+        String expectedCountryTitle = "Country:" + expectedAsterisk;
         String actualCountryTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertTrue(actualCountryTitle.contains(expectedCountryTitle));
+        Assert.assertEquals(actualCountryTitle,expectedCountryTitle);
 
         //Verify that Country fields is marked with expectedAsterisk
-        actualCountryTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertTrue(actualCountryTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isCountryContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
+
 
         //Verify that Country field is editable
         String expectedCountrySelect = "USA";
@@ -284,18 +287,18 @@ public class HotelsTest extends BaseTest {
     }
 
     @Test(description = "Verify that user can add City of new hotel")
-    public void cityOfHotel() {
+    public void cityOfHotel() throws IOException {
         //Verify that City field is displayed in Data section of Register new Hotel page
         boolean actualCitySelectDisplayed = registerNewHotelPage.isCitySelectDisplayed();
         Assert.assertTrue(actualCitySelectDisplayed);
 
-        String expectedCityTitle = "City";
+        String expectedCityTitle = "City:" + expectedAsterisk;
         String actualCityTitle = registerNewHotelPage.getCityTitle();
-        Assert.assertTrue(actualCityTitle.contains(expectedCityTitle));
+        Assert.assertEquals(actualCityTitle,expectedCityTitle);
 
         //Verify that City field is marked with expectedAsterisk
-        actualCityTitle = registerNewHotelPage.getCountryTitle();
-        Assert.assertTrue(actualCityTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isCityContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
 
         //Verify that City field is editable
         String expectedCountrySelect = "Ukraine";
@@ -355,13 +358,13 @@ public class HotelsTest extends BaseTest {
         boolean actualShortDescriptionDisplayed = registerNewHotelPage.isShortDescriptionDisplayed();
         Assert.assertTrue(actualShortDescriptionDisplayed);
 
-        String expectedShortDescriptionTitle = "Short Description";
+        String expectedShortDescriptionTitle = "Short Description:" + expectedAsterisk;
         String actualShortDescriptionTitle = registerNewHotelPage.getShortDescriptionTitle();
-        Assert.assertTrue(actualShortDescriptionTitle.contains(expectedShortDescriptionTitle));
+        Assert.assertEquals(actualShortDescriptionTitle,expectedShortDescriptionTitle);
 
         //Verify that Short Description field is marked with expectedAsterisk
-        actualShortDescriptionTitle = registerNewHotelPage.getShortDescriptionTitle();
-        Assert.assertTrue(actualShortDescriptionTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isShortDescriptionContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
 
         //Verify that Short Description field is editable
         String expectedShortDescription = "Short";
@@ -418,13 +421,13 @@ public class HotelsTest extends BaseTest {
         boolean actualDescriptionDisplayed = registerNewHotelPage.isDescriptionDisplayed();
         Assert.assertTrue(actualDescriptionDisplayed);
 
-        String expectedDescriptionTitle = "Description";
+        String expectedDescriptionTitle = "Description:" + expectedAsterisk;
         String actualDescriptionTitle = registerNewHotelPage.getDescriptionTitle();
-        Assert.assertTrue(actualDescriptionTitle.contains(expectedDescriptionTitle));
+        Assert.assertEquals(actualDescriptionTitle,expectedDescriptionTitle);
 
         //Verify that Description field is marked with asterisk
-        actualDescriptionTitle = registerNewHotelPage.getDescriptionTitle();
-        Assert.assertTrue(actualDescriptionTitle.contains(expectedAsterisk));
+        boolean actualNameContainsAsterisk = registerNewHotelPage.isDescriptionContainsAsterisk(expectedAsterisk);
+        Assert.assertTrue(actualNameContainsAsterisk);
 
         //Verify that Description field is editable
         String expectedDescription = "New";
@@ -483,9 +486,9 @@ public class HotelsTest extends BaseTest {
         boolean actualNotesDisplayed = registerNewHotelPage.isNotesDisplayed();
         Assert.assertTrue(actualNotesDisplayed);
 
-        String expectedNotesTitle = "Notes";
+        String expectedNotesTitle = "Notes:";
         String actualNotesTitle = registerNewHotelPage.getNotesTitle();
-        Assert.assertTrue(actualNotesTitle.contains(expectedNotesTitle));
+        Assert.assertEquals(actualNotesTitle,expectedNotesTitle);
 
         //Verify that Notes field is editable
         String expectedNotes = "New";
@@ -530,5 +533,11 @@ public class HotelsTest extends BaseTest {
         registerNewHotelPage.clickOnSaveButton();
         actualNotes = registerNewHotelPage.getNotesValue();
         Assert.assertEquals(actualNotes, expectedNotes);
+    }
+
+    private static String getCurrentDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
+        Date date = new Date();
+        return formatter.format(date);
     }
 }

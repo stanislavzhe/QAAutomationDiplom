@@ -7,6 +7,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -65,7 +67,7 @@ public class RegisterNewHotelPage {
     private WebElement countryInput;
 
     @FindBy(xpath = "//*[@id='add_hotel:country_panel']//li")
-    private List <WebElement> countrySelectList;
+    private List<WebElement> countrySelectList;
 
     @FindBy(id = "add_hotel:j_idt48")
     private WebElement countryTitle;
@@ -77,7 +79,7 @@ public class RegisterNewHotelPage {
     private WebElement cityInput;
 
     @FindBy(xpath = "//*[@id='add_hotel:city_panel']//li")
-    private List <WebElement> citySelectList;
+    private List<WebElement> citySelectList;
 
     @FindBy(id = "add_hotel:j_idt52")
     private WebElement cityTitle;
@@ -138,6 +140,14 @@ public class RegisterNewHotelPage {
         return nameFieldTitle.getText();
     }
 
+    public boolean isNameContainsAsterisk(String asterisk) {
+        return (isFieldTitleContainsAsterisk(asterisk, nameFieldTitle));
+    }
+
+    public boolean isFieldTitleContainsAsterisk(String asterisk, WebElement element) {
+        return (element.getText().contains(asterisk));
+    }
+
     public boolean isNameFieldDisplayed() {
         return nameFiled.isDisplayed();
     }
@@ -176,24 +186,22 @@ public class RegisterNewHotelPage {
         return globalRate.isDisplayed();
     }
 
-    public void selectGlobalRateStars(int starsValue) {
+    public void selectGlobalRateStars(int starsValue) throws IOException {
         int starValueToIndex = starsValue - 1;
         if (starsValue <= 5 && starsValue >= 1) {
             globalRateStarsList.get(starValueToIndex).click();
         } else if (starsValue == 0) {
             cancelGlobalRateStar();
-        }
-        //TODO edit to Exception
-        else {
-            System.out.println("Wrong stars value");
+        } else {
+            throw new IOException("Wrong stars value: " + starsValue + ", instead of max 5");
         }
     }
 
-    public void cancelGlobalRateStar(){
+    public void cancelGlobalRateStar() {
         globalRateCancel.click();
     }
 
-    public String getGlobalRateValue(){
+    public String getGlobalRateValue() {
         String globalRateValueString = globalRateValue.getAttribute("value");
         //for 0 stars parse to int
         if (globalRateValueString.equals("")) {
@@ -202,124 +210,143 @@ public class RegisterNewHotelPage {
         return globalRateValueString;
     }
 
-    public String getDateOfConstructionTitle(){
+    public int getGlobalRateIntValue() {
+        return Integer.parseInt(getGlobalRateValue());
+    }
+
+    public String getDateOfConstructionTitle() {
         return dateOfConstructionTitle.getText();
     }
 
-    public boolean isDateOfConstructionInputDisplayed(){
+    public boolean isDateOfConstructionContainsAsterisk(String asterisk) {
+        return (isFieldTitleContainsAsterisk(asterisk, dateOfConstructionTitle));
+    }
+
+    public boolean isDateOfConstructionInputDisplayed() {
         return dateOfConstructionInput.isDisplayed();
     }
 
-    public void typeDateOfConstruction(String dateValue){
+    public void typeDateOfConstruction(String dateValue) {
         dateOfConstructionInput.sendKeys(dateValue);
     }
 
-    public void clearAndTypeDateOfConstruction(String dateValue){
+    public void clearAndTypeDateOfConstruction(String dateValue) {
         dateOfConstructionInput.clear();
         dateOfConstructionInput.sendKeys(dateValue);
     }
 
-    public void clearDateOfConstruction(){
+    public void clearDateOfConstruction() {
         dateOfConstructionInput.clear();
     }
 
-    public String getDateOfConstructionValue(){
+    public String getDateOfConstructionValue() {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         return (String) executor.executeScript(" return arguments[0].value;", dateOfConstructionInput);
     }
 
-    public boolean isDateOfConstructionCalendarIconDisplayed(){
+    public boolean isDateOfConstructionCalendarIconDisplayed() {
         return dateOfConstructionCalendarIcon.isDisplayed();
     }
 
-    public boolean isDateOfConstructionErrorDisplayed(){
+    public boolean isDateOfConstructionErrorDisplayed() {
         return dateOfConstructionError.isDisplayed();
     }
 
-    public String getDateOfConstructionErrorText(){
+    public String getDateOfConstructionErrorText() {
         return dateOfConstructionError.getText();
     }
 
-    public boolean isCountrySelectDisplayed(){
+    public boolean isCountrySelectDisplayed() {
         return countryInput.isDisplayed();
     }
 
-    public void clickOnCountrySelect(){
+    public void clickOnCountrySelect() {
         countryInput.click();
     }
 
-    public String getCountrySelectValue(){
+    public String getCountrySelectValue() {
         return countryInput.getText();
     }
 
-    public String getCountryTitle(){
+    public String getCountryTitle() {
         return countryTitle.getText();
     }
 
-    public void setCountrySelect(String selectValue){
-        setSelect(selectValue,countrySelectList);
+    public boolean isCountryContainsAsterisk(String asterisk) {
+        return (isFieldTitleContainsAsterisk(asterisk, countryTitle));
     }
 
-    public boolean isCountryErrorDisplayed(){
+    public void setCountrySelect(String selectValue) throws IOException {
+        setSelect(selectValue, countrySelectList);
+    }
+
+    public boolean isCountryErrorDisplayed() {
         return countryError.isDisplayed();
     }
 
-    public String getCountryErrorText(){
+    public String getCountryErrorText() {
         return countryError.getText();
     }
 
-    public boolean isCitySelectDisplayed(){
+    public boolean isCitySelectDisplayed() {
         return cityInput.isDisplayed();
     }
 
-    public String getCitySelectValue(){
+    public String getCitySelectValue() {
         return cityInput.getText();
     }
 
-    public String getCityTitle(){
+    public String getCityTitle() {
         return cityTitle.getText();
     }
 
-    public void clickOnCitySelect(){
+    public boolean isCityContainsAsterisk(String asterisk) {
+        return (isFieldTitleContainsAsterisk(asterisk, cityTitle));
+    }
+
+    public void clickOnCitySelect() {
         cityInput.click();
     }
 
-    public void setCitySelect(String selectValue){
-        setSelect(selectValue,citySelectList);
+    public void setCitySelect(String selectValue) throws IOException {
+        setSelect(selectValue, citySelectList);
     }
 
-    public void setSelect(String selectValue, List<WebElement> selectElement){
+    public void setSelect(String selectValue, List<WebElement> selectElement) throws IOException {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(selectElement.get(0)));
 
         boolean isClick = false;
-        for (WebElement element: selectElement) {
-            if (element.getText().equals(selectValue)){
+        for (WebElement element : selectElement) {
+            if (element.getText().equals(selectValue)) {
                 selectElement.get(selectElement.indexOf(element)).click();
                 isClick = true;
                 break;
             }
         }
-        //TODO edit to Exception
-        if (!isClick){
-            System.out.println("No such elements");
+        if (!isClick) {
+            throw new IOException("No such element: " + selectValue);
         }
     }
 
-    public boolean isCityErrorDisplayed(){
+    public boolean isCityErrorDisplayed() {
         return cityError.isDisplayed();
     }
 
-    public String getCityErrorText(){
+    public String getCityErrorText() {
         return cityError.getText();
     }
 
-    public boolean isShortDescriptionDisplayed(){
+    public boolean isShortDescriptionDisplayed() {
         return shortDescription.isDisplayed();
     }
 
-    public String getShortDescriptionTitle(){
+    public String getShortDescriptionTitle() {
         return shortDescriptionTitle.getText();
+    }
+
+    public boolean isShortDescriptionContainsAsterisk(String asterisk){
+        return (isFieldTitleContainsAsterisk(asterisk,shortDescriptionTitle));
     }
 
     public void typeShortDescription(String name) {
@@ -340,7 +367,7 @@ public class RegisterNewHotelPage {
         return (String) executor.executeScript(" return arguments[0].value;", shortDescription);
     }
 
-    public boolean isShortDescriptionErrorDisplayed(){
+    public boolean isShortDescriptionErrorDisplayed() {
         return shortDescriptionError.isDisplayed();
     }
 
@@ -348,12 +375,16 @@ public class RegisterNewHotelPage {
         return shortDescriptionError.getText();
     }
 
-    public boolean isDescriptionDisplayed(){
+    public boolean isDescriptionDisplayed() {
         return description.isDisplayed();
     }
 
-    public String getDescriptionTitle(){
+    public String getDescriptionTitle() {
         return descriptionTitle.getText();
+    }
+
+    public boolean isDescriptionContainsAsterisk(String asterisk){
+        return (isFieldTitleContainsAsterisk(asterisk,descriptionTitle));
     }
 
     public void typeDescription(String name) {
@@ -374,7 +405,7 @@ public class RegisterNewHotelPage {
         return (String) executor.executeScript(" return arguments[0].value;", description);
     }
 
-    public boolean isDescriptionErrorDisplayed(){
+    public boolean isDescriptionErrorDisplayed() {
         return descriptionError.isDisplayed();
     }
 
@@ -382,11 +413,11 @@ public class RegisterNewHotelPage {
         return descriptionError.getText();
     }
 
-    public boolean isNotesDisplayed(){
+    public boolean isNotesDisplayed() {
         return notes.isDisplayed();
     }
 
-    public String getNotesTitle(){
+    public String getNotesTitle() {
         return notesTitle.getText();
     }
 
