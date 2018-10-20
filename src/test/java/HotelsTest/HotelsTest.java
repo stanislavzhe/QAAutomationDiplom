@@ -518,7 +518,7 @@ public class HotelsTest extends BaseTest {
 
         //Verify that it is possible to save the empty Notes field
         expectedNotes = "";
-        registerNewHotelPage.clearAndTypeNotes(expectedNotes);
+        registerNewHotelPage.clearNotes();
         registerNewHotelPage.clickOnSaveButton();
         registerNewHotelPage.clickOnSaveButton();// need second click on save button
         actualNotes = registerNewHotelPage.getNotesValue();

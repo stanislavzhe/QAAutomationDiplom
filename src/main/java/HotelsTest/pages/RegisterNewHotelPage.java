@@ -7,9 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.util.List;
-import java.util.Objects;
 
 
 public class RegisterNewHotelPage {
@@ -259,21 +257,7 @@ public class RegisterNewHotelPage {
     }
 
     public void setCountrySelect(String selectValue){
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(countrySelectList.get(0)));
-
-        boolean isClick = false;
-        for (WebElement element: countrySelectList) {
-            if (Objects.equals(element.getText(), selectValue)){
-                countrySelectList.get(countrySelectList.indexOf(element)).click();
-                isClick = true;
-                break;
-            }
-        }
-        //TODO edit to Exception
-        if (!isClick){
-            System.out.println("No such elements");
-        }
+        setSelect(selectValue,countrySelectList);
     }
 
     public boolean isCountryErrorDisplayed(){
@@ -301,13 +285,17 @@ public class RegisterNewHotelPage {
     }
 
     public void setCitySelect(String selectValue){
+        setSelect(selectValue,citySelectList);
+    }
+
+    public void setSelect(String selectValue, List<WebElement> selectElement){
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(citySelectList.get(0)));
+        wait.until(ExpectedConditions.visibilityOf(selectElement.get(0)));
 
         boolean isClick = false;
-        for (WebElement element: citySelectList) {
-            if (Objects.equals(element.getText(), selectValue)){
-                citySelectList.get(citySelectList.indexOf(element)).click();
+        for (WebElement element: selectElement) {
+            if (element.getText().equals(selectValue)){
+                selectElement.get(selectElement.indexOf(element)).click();
                 isClick = true;
                 break;
             }
